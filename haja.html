@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세대별 하자 접수 현황판</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0ede8;
+  --surface: #ffffff;
+  --surface2: #f7f5f1;
+  --border: #e0dbd2;
+  --ink: #1c1a17;
+  --ink2: #4a4640;
+  --ink3: #9a9489;
+  --accent: #c8440a;
+  --accent-light: #fdf0eb;
+  --blue: #1a5fa8;
+  --blue-light: #e8f0fa;
+  --yellow: #d4920a;
+  --yellow-light: #fdf6e3;
+  --green: #2a7a4b;
+  --green-light: #e8f5ee;
+  --purple: #6b3fa0;
+  --purple-light: #f2ecfb;
+  --teal: #1a7a7a;
+  --teal-light: #e6f5f5;
+
+/* Defect type colors */
+–c-crack:    #c8440a;
+–c-leak:     #1a5fa8;
+–c-finish:   #d4920a;
+–c-facility: #2a7a4b;
+–c-window:   #6b3fa0;
+–c-other:    #9a9489;
+}
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: var(–bg);
+font-family: ‘Noto Sans KR’, sans-serif;
+min-height: 100vh;
+padding: 24px 20px 60px;
+}
+
+/* ── Header ── */
+header {
+max-width: 1400px;
+margin: 0 auto 24px;
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+gap: 16px;
+padding-bottom: 16px;
+border-bottom: 2px solid var(–ink);
+}
+
+.header-left { display: flex; align-items: flex-end; gap: 16px; }
+
+.header-eyebrow {
+font-size: 0.68rem;
+font-weight: 700;
+letter-spacing: 3px;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 4px;
+}
+
+h1 {
+font-family: ‘Oswald’, sans-serif;
+font-size: 2rem;
+font-weight: 600;
+color: var(–ink);
+letter-spacing: 1px;
+line-height: 1;
+}
+
+.site-tag {
+background: var(–ink);
+color: #fff;
+font-size: 0.72rem;
+font-weight: 700;
+padding: 4px 12px;
+border-radius: 3px;
+margin-bottom: 2px;
+letter-spacing: 0.5px;
+}
+
+.header-right {
+display: flex;
+gap: 10px;
+align-items: center;
+}
+
+.btn {
+border: none;
+border-radius: 5px;
+padding: 9px 18px;
+font-family: ‘Noto Sans KR’, sans-serif;
+font-size: 0.8rem;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.15s;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+
+.btn-primary { background: var(–accent); color: #fff; }
+.btn-primary:hover { background: #a83508; }
+.btn-secondary { background: var(–surface); color: var(–ink2); border: 1px solid var(–border); }
+.btn-secondary:hover { background: var(–surface2); }
+
+/* ── Summary Strip ── */
+.summary-strip {
+max-width: 1400px;
+margin: 0 auto 20px;
+display: grid;
+grid-template-columns: repeat(6, 1fr);
+gap: 10px;
+}
+
+.stat-card {
+background: var(–surface);
+border-radius: 8px;
+padding: 14px 16px;
+border: 1px solid var(–border);
+position: relative;
+overflow: hidden;
+}
+
+.stat-card::after {
+content: ‘’;
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 3px;
+background: var(–c);
+}
+
+.stat-label {
+font-size: 0.68rem;
+font-weight: 700;
+color: var(–ink3);
+letter-spacing: 0.5px;
+text-transform: uppercase;
+margin-bottom: 4px;
+}
+
+.stat-value {
+font-family: ‘Oswald’, sans-serif;
+font-size: 1.8rem;
+font-weight: 600;
+color: var(–c, var(–ink));
+line-height: 1;
+}
+
+.stat-sub {
+font-size: 0.68rem;
+color: var(–ink3);
+margin-top: 2px;
+}
+
+/* ── Main Layout ── */
+.main-layout {
+max-width: 1400px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 1fr 360px;
+gap: 16px;
+align-items: start;
+}
+
+/* ── Building Visualizer ── */
+.building-panel {
+background: var(–surface);
+border-radius: 10px;
+border: 1px solid var(–border);
+overflow: hidden;
+}
+
+.panel-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 14px 20px;
+border-bottom: 1px solid var(–border);
+background: var(–surface2);
+}
+
+.panel-title {
+font-family: ‘Oswald’, sans-serif;
+font-size: 0.9rem;
+font-weight: 500;
+color: var(–ink2);
+letter-spacing: 1px;
+text-transform: uppercase;
+}
+
+.dong-tabs {
+display: flex;
+gap: 6px;
+}
+
+.dong-tab {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 5px;
+padding: 5px 14px;
+font-family: ‘Noto Sans KR’, sans-serif;
+font-size: 0.78rem;
+font-weight: 700;
+color: var(–ink3);
+cursor: pointer;
+transition: all 0.15s;
+}
+
+.dong-tab.active {
+background: var(–ink);
+color: #fff;
+border-color: var(–ink);
+}
+
+/* Building grid */
+.building-container {
+padding: 20px;
+overflow-x: auto;
+}
+
+.floor-label-col {
+display: flex;
+flex-direction: column;
+gap: 4px;
+padding-top: 0;
+}
+
+.building-grid-wrap {
+display: flex;
+gap: 10px;
+align-items: flex-start;
+}
+
+.floor-labels {
+display: flex;
+flex-direction: column;
+gap: 4px;
+flex-shrink: 0;
+padding-top: 28px;
+}
+
+.floor-label {
+height: 44px;
+display: flex;
+align-items: center;
+justify-content: flex-end;
+padding-right: 10px;
+font-family: ‘Oswald’, sans-serif;
+font-size: 0.78rem;
+font-weight: 500;
+color: var(–ink3);
+width: 36px;
+}
+
+.unit-grid-outer {
+flex: 1;
+}
+
+.unit-grid-header {
+display: flex;
+gap: 4px;
+margin-bottom: 4px;
+}
+
+.unit-header-cell {
+font-family: ‘Oswald’, sans-serif;
+font-size: 0.72rem;
+font-weight: 500;
+color: var(–ink3);
+text-align: center;
+letter-spacing: 0.5px;
+}
+
+.unit-floor-row {
+display: flex;
+gap: 4px;
+margin-bottom: 4px;
+}
+
+/* Unit cell */
+.unit-cell {
+height: 44px;
+border-radius: 5px;
+border: 1.5px solid transparent;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+transition: all 0.15s;
+position: relative;
+flex-shrink: 0;
+}
+
+.unit-cell:hover {
+transform: scale(1.06);
+z-index: 10;
+box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.unit-cell.none {
+background: var(–surface2);
+border-color: var(–border);
+}
+
+.unit-cell.none:hover { background: #eeeae3; }
+
+.unit-cell.low {
+background: #fff8e6;
+border-color: #f0c040;
+}
+
+.unit-cell.mid {
+background: #fff0e8;
+border-color: #e87030;
+}
+
+.unit-cell.high {
+background: #fde8e8;
+border-color: #c8440a;
+}
+
+.unit-cell.resolved {
+background: #e8f5ee;
+border-color: #2a7a4b;
+}
+
+.unit-ho {
+font-family: ‘Oswald’, sans-serif;
+font-size: 0.72rem;
+font-weight: 500;
+color: var(–ink2);
+line-height: 1;
+}
+
+.unit-count {
+font-family: ‘Oswald’, sans-serif;
+font-size: 1rem;
+font-weight: 700;
+line-height: 1;
+margin-top: 1px;
+}
+
+.unit-cell.none .unit-count { color: var(–ink3); font-size: 0.72rem; }
+.unit-cell.low .unit-count  { color: #c07010; }
+.unit-cell.mid .unit-count  { color: #c05010; }
+.unit-cell.high .unit-count { color: var(–accent); }
+.unit-cell.resolved .unit-count { color: var(–green); }
+
+/* Dot indicators */
+.unit-dots {
+display: flex;
+gap: 2px;
+margin-top: 2px;
+}
+
+.unit-dot {
+width: 5px; height: 5px;
+border-radius: 50%;
+}
+
+/* Legend */
+.legend-row {
+display: flex;
+gap: 14px;
+padding: 12px 20px;
+border-top: 1px solid var(–border);
+background: var(–surface2);
+flex-wrap: wrap;
+}
+
+.legend-item {
+display: flex;
+align-items: center;
+gap: 6px;
+font-size: 0.72rem;
+color: var(–ink3);
+}
+
+.legend-swatch {
+width: 14px; height: 14px;
+border-radius: 3px;
+border: 1.5px solid transparent;
+}
+
+/* ── Right Sidebar ── */
+.sidebar {
+display: flex;
+flex-direction: column;
+gap: 14px;
+}
+
+/* Defect type breakdown */
+.type-list { padding: 14px 16px; }
+
+.type-row {
+display: flex;
+align-items: center;
+gap: 8px;
+padding: 7px 0;
+border-bottom: 1px solid var(–border);
+cursor: pointer;
+transition: background 0.1s;
+}
+
+.type-row:last-child { border-bottom: none; }
+.type-row:hover { background: var(–surface2); margin: 0 -16px; padding: 7px 16px; border-radius: 4px; }
+
+.type-dot {
+width: 10px; height: 10px;
+border-radius: 50%;
+flex-shrink: 0;
+}
+
+.type-name {
+flex: 1;
+font-size: 0.83rem;
+font-weight: 500;
+color: var(–ink2);
+}
+
+.type-bar-wrap {
+width: 70px;
+height: 5px;
+background: var(–surface2);
+border-radius: 99px;
+overflow: hidden;
+}
+
+.type-bar-fill {
+height: 100%;
+border-radius: 99px;
+transition: width 0.5s;
+}
+
+.type-count {
+font-family: ‘Oswald’, sans-serif;
+font-size: 1rem;
+font-weight: 600;
+color: var(–ink);
+min-width: 22px;
+text-align: right;
+}
+
+/* Recent list */
+.recent-list { padding: 0; }
+
+.defect-item {
+display: flex;
+align-items: flex-start;
+gap: 10px;
+padding: 12px 16px;
+border-bottom: 1px solid var(–border);
+transition: background 0.1s;
+cursor: pointer;
+}
+
+.defect-item:last-child { border-bottom: none; }
+.defect-item:hover { background: var(–surface2); }
+
+.defect-badge {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+flex-shrink: 0;
+margin-top: 5px;
+}
+
+.defect-info { flex: 1; min-width: 0; }
+
+.defect-unit {
+font-family: ‘Oswald’, sans-serif;
+font-size: 0.88rem;
+font-weight: 600;
+color: var(–ink);
+}
+
+.defect-type {
+font-size: 0.72rem;
+color: var(–ink3);
+margin-top: 1px;
+}
+
+.defect-desc {
+font-size: 0.78rem;
+color: var(–ink2);
+margin-top: 3px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+.defect-date {
+font-size: 0.68rem;
+color: var(–ink3);
+flex-shrink: 0;
+margin-top: 4px;
+}
+
+.status-pill {
+display: inline-block;
+font-size: 0.65rem;
+font-weight: 700;
+padding: 2px 7px;
+border-radius: 99px;
+margin-top: 3px;
+}
+
+/* ── Modal ── */
+.modal-overlay {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(28,26,23,0.55);
+z-index: 200;
+align-items: center;
+justify-content: center;
+padding: 20px;
+backdrop-filter: blur(2px);
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+background: var(–surface);
+border-radius: 12px;
+width: 100%;
+max-width: 520px;
+max-height: 90vh;
+overflow-y: auto;
+box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+animation: modalIn 0.2s ease both;
+}
+
+@keyframes modalIn {
+from { opacity: 0; transform: translateY(10px) scale(0.98); }
+to   { opacity: 1; transform: none; }
+}
+
+.modal-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 18px 20px;
+border-bottom: 1px solid var(–border);
+}
+
+.modal-title {
+font-family: ‘Oswald’, sans-serif;
+font-size: 1.1rem;
+font-weight: 600;
+color: var(–ink);
+}
+
+.btn-close {
+background: none;
+border: none;
+font-size: 1.2rem;
+color: var(–ink3);
+cursor: pointer;
+padding: 4px;
+transition: color 0.15s;
+}
+
+.btn-close:hover { color: var(–ink); }
+
+.modal-body { padding: 20px; }
+
+/* Form */
+.form-row {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+margin-bottom: 14px;
+}
+
+.form-row.single { grid-template-columns: 1fr; }
+
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+
+.form-label {
+font-size: 0.72rem;
+font-weight: 700;
+color: var(–ink3);
+letter-spacing: 0.5px;
+text-transform: uppercase;
+}
+
+.form-control {
+background: var(–surface2);
+border: 1.5px solid var(–border);
+border-radius: 6px;
+padding: 9px 12px;
+font-family: ‘Noto Sans KR’, sans-serif;
+font-size: 0.88rem;
+color: var(–ink);
+outline: none;
+transition: border-color 0.2s;
+width: 100%;
+}
+
+.form-control:focus { border-color: var(–accent); background: #fff; }
+.form-control::placeholder { color: var(–border); }
+
+select.form-control { cursor: pointer; }
+
+.form-actions {
+display: flex;
+gap: 10px;
+justify-content: flex-end;
+padding-top: 8px;
+border-top: 1px solid var(–border);
+margin-top: 4px;
+}
+
+/* Unit detail modal */
+.unit-defect-list { display: flex; flex-direction: column; gap: 8px; }
+
+.unit-defect-card {
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 8px;
+padding: 12px 14px;
+display: flex;
+gap: 10px;
+align-items: flex-start;
+}
+
+.udc-left { flex: 1; }
+
+.udc-type {
+font-size: 0.72rem;
+font-weight: 700;
+padding: 2px 8px;
+border-radius: 4px;
+display: inline-block;
+margin-bottom: 5px;
+}
+
+.udc-desc { font-size: 0.85rem; color: var(–ink2); }
+.udc-date { font-size: 0.7rem; color: var(–ink3); margin-top: 3px; }
+
+.udc-status { flex-shrink: 0; }
+
+.btn-resolve {
+background: var(–green);
+color: #fff;
+border: none;
+border-radius: 5px;
+padding: 5px 10px;
+font-size: 0.72rem;
+font-weight: 700;
+font-family: ‘Noto Sans KR’, sans-serif;
+cursor: pointer;
+transition: opacity 0.15s;
+}
+
+.btn-resolve:hover { opacity: 0.85; }
+.btn-resolve.resolved { background: var(–border); color: var(–ink3); cursor: default; }
+
+.btn-del-defect {
+background: none;
+border: none;
+color: var(–ink3);
+cursor: pointer;
+font-size: 0.8rem;
+padding: 2px 4px;
+transition: color 0.15s;
+}
+
+.btn-del-defect:hover { color: var(–accent); }
+
+/* Animations */
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(6px); }
+to   { opacity: 1; transform: none; }
+}
+
+.stat-card { animation: fadeUp 0.4s ease both; }
+.stat-card:nth-child(1) { animation-delay: 0.05s; }
+.stat-card:nth-child(2) { animation-delay: 0.10s; }
+.stat-card:nth-child(3) { animation-delay: 0.15s; }
+.stat-card:nth-child(4) { animation-delay: 0.20s; }
+.stat-card:nth-child(5) { animation-delay: 0.25s; }
+.stat-card:nth-child(6) { animation-delay: 0.30s; }
+
+/* Responsive */
+@media (max-width: 1100px) {
+.main-layout { grid-template-columns: 1fr; }
+.summary-strip { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+.summary-strip { grid-template-columns: repeat(2, 1fr); }
+header { flex-direction: column; align-items: flex-start; }
+.header-left { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- Header -->
+
+<header>
+  <div class="header-left">
+    <div>
+      <div class="header-eyebrow">Defect Management System</div>
+      <h1>세대별 하자 접수 현황판</h1>
+    </div>
+    <div class="site-tag" id="site-name-tag">한강뷰 아파트</div>
+  </div>
+  <div class="header-right">
+    <button class="btn btn-secondary" onclick="openSettings()">⚙ 설정</button>
+    <button class="btn btn-primary" onclick="openAddModal()">+ 하자 접수</button>
+  </div>
+</header>
+
+<!-- Summary -->
+
+<div class="summary-strip" id="summary-strip"></div>
+
+<!-- Main -->
+
+<div class="main-layout">
+
+  <!-- Building -->
+
+  <div class="building-panel">
+    <div class="panel-header">
+      <span class="panel-title">동별 세대 현황</span>
+      <div class="dong-tabs" id="dong-tabs"></div>
+    </div>
+    <div class="building-container" id="building-container"></div>
+    <div class="legend-row">
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#f7f5f1;border-color:#e0dbd2"></div> 접수없음
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#fff8e6;border-color:#f0c040"></div> 1건
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#fff0e8;border-color:#e87030"></div> 2건
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#fde8e8;border-color:#c8440a"></div> 3건+
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#e8f5ee;border-color:#2a7a4b"></div> 전체 처리완료
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+
+  <div class="sidebar">
+
+```
+<!-- Type breakdown -->
+<div class="building-panel">
+  <div class="panel-header">
+    <span class="panel-title">하자 유형 현황</span>
+  </div>
+  <div class="type-list" id="type-list"></div>
+</div>
+
+<!-- Recent -->
+<div class="building-panel">
+  <div class="panel-header">
+    <span class="panel-title">최근 접수 목록</span>
+    <span style="font-size:0.72rem;color:var(--ink3)" id="total-count-label"></span>
+  </div>
+  <div class="recent-list" id="recent-list"></div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- Add Modal -->
+
+<div class="modal-overlay" id="add-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">하자 접수 등록</span>
+      <button class="btn-close" onclick="closeModal('add-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">동</label>
+          <select class="form-control" id="f-dong">
+            <option value="101">101동</option>
+            <option value="102">102동</option>
+            <option value="103">103동</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">층</label>
+          <select class="form-control" id="f-floor"></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">호수</label>
+          <select class="form-control" id="f-unit"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">하자 유형</label>
+          <select class="form-control" id="f-type">
+            <option value="crack">균열·파손</option>
+            <option value="leak">누수·결로</option>
+            <option value="finish">마감 불량</option>
+            <option value="facility">설비 이상</option>
+            <option value="window">창호·문</option>
+            <option value="other">기타</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="form-group">
+          <label class="form-label">하자 내용</label>
+          <input class="form-control" id="f-desc" placeholder="하자 내용을 구체적으로 입력하세요">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">접수일</label>
+          <input class="form-control" type="date" id="f-date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">접수자</label>
+          <input class="form-control" id="f-reporter" placeholder="성명">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" onclick="closeModal('add-modal')">취소</button>
+        <button class="btn btn-primary" onclick="submitDefect()">접수 등록</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Unit Detail Modal -->
+
+<div class="modal-overlay" id="unit-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="unit-modal-title">세대 하자 현황</span>
+      <button class="btn-close" onclick="closeModal('unit-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="unit-defect-list" id="unit-defect-list"></div>
+      <div style="margin-top:14px">
+        <button class="btn btn-primary" style="width:100%" onclick="openAddFromUnit()">+ 이 세대 하자 추가</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">현장 설정</span>
+      <button class="btn-close" onclick="closeModal('settings-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row single">
+        <div class="form-group">
+          <label class="form-label">현장명</label>
+          <input class="form-control" id="s-sitename" placeholder="현장명">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">층수</label>
+          <input class="form-control" type="number" id="s-floors" min="1" max="30" value="10">
+        </div>
+        <div class="form-group">
+          <label class="form-label">세대/층</label>
+          <input class="form-control" type="number" id="s-units" min="1" max="10" value="4">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" onclick="closeModal('settings-modal')">취소</button>
+        <button class="btn btn-primary" onclick="applySettings()">적용</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Config ────────────────────────────────────────────────
+const DEFECT_TYPES = {
+  crack:    { label: '균열·파손',  color: '#c8440a' },
+  leak:     { label: '누수·결로',  color: '#1a5fa8' },
+  finish:   { label: '마감 불량',  color: '#d4920a' },
+  facility: { label: '설비 이상',  color: '#2a7a4b' },
+  window:   { label: '창호·문',    color: '#6b3fa0' },
+  other:    { label: '기타',        color: '#9a9489' },
+};
+
+const DONGS = [
+  { id: '101', label: '101동' },
+  { id: '102', label: '102동' },
+  { id: '103', label: '103동' },
+];
+
+// ─── State ─────────────────────────────────────────────────
+let config = { siteName: '한강뷰 아파트', floors: 10, unitsPerFloor: 4 };
+let activeDong = '101';
+let selectedUnit = null; // { dong, floor, unit }
+let nextId = 1;
+
+let defects = [
+  { id: nextId++, dong:'101', floor:8, unit:2, type:'crack',    desc:'거실 천장 균열 발생',       date:'2025-04-02', reporter:'김입주', resolved:false },
+  { id: nextId++, dong:'101', floor:8, unit:2, type:'leak',     desc:'화장실 천장 누수',           date:'2025-04-03', reporter:'김입주', resolved:false },
+  { id: nextId++, dong:'101', floor:5, unit:1, type:'finish',   desc:'도배지 들뜸 및 곰팡이',      date:'2025-04-01', reporter:'이입주', resolved:true  },
+  { id: nextId++, dong:'101', floor:5, unit:3, type:'facility', desc:'보일러 작동 불량',           date:'2025-04-04', reporter:'박입주', resolved:false },
+  { id: nextId++, dong:'101', floor:3, unit:2, type:'window',   desc:'안방 창문 잠금장치 파손',     date:'2025-04-05', reporter:'최입주', resolved:true  },
+  { id: nextId++, dong:'101', floor:3, unit:4, type:'crack',    desc:'욕실 타일 크랙',            date:'2025-04-06', reporter:'정입주', resolved:false },
+  { id: nextId++, dong:'101', floor:7, unit:1, type:'leak',     desc:'주방 싱크대 하부 누수',      date:'2025-04-07', reporter:'한입주', resolved:false },
+  { id: nextId++, dong:'101', floor:2, unit:3, type:'finish',   desc:'현관 마루 들뜸',            date:'2025-04-03', reporter:'윤입주', resolved:false },
+  { id: nextId++, dong:'102', floor:6, unit:2, type:'crack',    desc:'발코니 바닥 균열',          date:'2025-04-04', reporter:'조입주', resolved:false },
+  { id: nextId++, dong:'102', floor:4, unit:1, type:'other',    desc:'엘리베이터 층간 소음',       date:'2025-04-05', reporter:'강입주', resolved:true  },
+  { id: nextId++, dong:'103', floor:9, unit:3, type:'facility', desc:'온수 공급 불량',            date:'2025-04-06', reporter:'신입주', resolved:false },
+  { id: nextId++, dong:'103', floor:1, unit:2, type:'window',   desc:'거실 미닫이문 레일 이탈',    date:'2025-04-07', reporter:'임입주', resolved:false },
+];
+
+// ─── Build UI ─────────────────────────────────────────────
+function init() {
+  document.getElementById('site-name-tag').textContent = config.siteName;
+  buildDongTabs();
+  renderAll();
+  populateFloorUnit();
+  document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('s-sitename').value = config.siteName;
+  document.getElementById('s-floors').value = config.floors;
+  document.getElementById('s-units').value = config.unitsPerFloor;
+
+  document.getElementById('f-dong').addEventListener('change', populateFloorUnit);
+  document.getElementById('f-floor').addEventListener('change', populateUnitSelect);
+}
+
+function buildDongTabs() {
+  const el = document.getElementById('dong-tabs');
+  el.innerHTML = DONGS.map(d => `
+    <button class="dong-tab ${d.id===activeDong?'active':''}"
+      onclick="switchDong('${d.id}')">${d.label}</button>
+  `).join('');
+}
+
+function switchDong(id) {
+  activeDong = id;
+  buildDongTabs();
+  renderBuilding();
+}
+
+function renderAll() {
+  renderSummary();
+  renderBuilding();
+  renderTypeList();
+  renderRecentList();
+}
+
+// ─── Summary ───────────────────────────────────────────────
+function renderSummary() {
+  const total    = defects.length;
+  const open     = defects.filter(d => !d.resolved).length;
+  const resolved = defects.filter(d =>  d.resolved).length;
+  const rate     = total ? Math.round(resolved/total*100) : 0;
+
+  const typeCounts = {};
+  defects.filter(d => !d.resolved).forEach(d => { typeCounts[d.type] = (typeCounts[d.type]||0)+1; });
+  const topEntry = Object.entries(typeCounts).sort((a,b)=>b[1]-a[1])[0];
+  const topType = topEntry ? DEFECT_TYPES[topEntry[0]].label : '—';
+
+  const affectedUnits = new Set(defects.map(d=>`${d.dong}-${d.floor}-${d.unit}`)).size;
+
+  const cards = [
+    { label:'전체 접수',    value: total,          sub:'총 하자 건수',     c:'var(--ink)' },
+    { label:'미처리',       value: open,           sub:'처리 필요',        c:'var(--accent)' },
+    { label:'처리완료',     value: resolved,       sub:'조치 완료',        c:'var(--green)' },
+    { label:'처리율',       value: rate+'%',       sub:'전체 대비',        c:'var(--blue)' },
+    { label:'접수 세대수',  value: affectedUnits,  sub:'중복 제외',        c:'var(--yellow)' },
+    { label:'최다 유형',    value: topType,        sub:'미처리 기준',      c:'var(--purple)' },
+  ];
+
+  document.getElementById('summary-strip').innerHTML = cards.map(c => `
+    <div class="stat-card" style="--c:${c.c}">
+      <div class="stat-label">${c.label}</div>
+      <div class="stat-value">${c.value}</div>
+      <div class="stat-sub">${c.sub}</div>
+    </div>
+  `).join('');
+}
+
+// ─── Building Grid ─────────────────────────────────────────
+function renderBuilding() {
+  const container = document.getElementById('building-container');
+  const F = config.floors;
+  const U = config.unitsPerFloor;
+  const CELL_W = Math.max(54, Math.min(70, Math.floor((container.clientWidth - 60) / U) - 4));
+
+  // Build unit map for current dong
+  const unitMap = {}; // key: `${floor}-${unit}` → { defects[], allResolved }
+  defects.filter(d => d.dong === activeDong).forEach(d => {
+    const key = `${d.floor}-${d.unit}`;
+    if (!unitMap[key]) unitMap[key] = [];
+    unitMap[key].push(d);
+  });
+
+  // Headers
+  const unitNums = Array.from({length: U}, (_,i) => i+1);
+  const headerCells = unitNums.map(u =>
+    `<div class="unit-header-cell" style="width:${CELL_W}px">${u.toString().padStart(2,'0')}호</div>`
+  ).join('');
+
+  // Floor rows (top = highest floor)
+  let rows = '';
+  for (let f = F; f >= 1; f--) {
+    const cells = unitNums.map(u => {
+      const key = `${f}-${u}`;
+      const list = unitMap[key] || [];
+      const total = list.length;
+      const openList = list.filter(d => !d.resolved);
+      const open = openList.length;
+
+      let cls = 'none';
+      if (total > 0) {
+        if (open === 0) cls = 'resolved';
+        else if (open === 1) cls = 'low';
+        else if (open === 2) cls = 'mid';
+        else cls = 'high';
+      }
+
+      // Type dots (up to 3)
+      const dots = openList.slice(0,3).map(d =>
+        `<div class="unit-dot" style="background:${DEFECT_TYPES[d.type].color}"></div>`
+      ).join('');
+
+      const countDisplay = total > 0 ? total : '·';
+
+      return `
+        <div class="unit-cell ${cls}" style="width:${CELL_W}px"
+          onclick="openUnitModal('${activeDong}',${f},${u})">
+          <div class="unit-ho">${f}층</div>
+          <div class="unit-count">${countDisplay}</div>
+          ${dots ? `<div class="unit-dots">${dots}</div>` : ''}
+        </div>
+      `;
+    }).join('');
+
+    rows += `
+      <div class="unit-floor-row">
+        ${cells}
+      </div>
+    `;
+  }
+
+  container.innerHTML = `
+    <div class="building-grid-wrap">
+      <div class="floor-labels">
+        ${Array.from({length:F},(_,i)=>F-i).map(f=>
+          `<div class="floor-label">${f}F</div>`
+        ).join('')}
+      </div>
+      <div class="unit-grid-outer">
+        <div class="unit-grid-header" style="padding-left:4px">
+          ${headerCells}
+        </div>
+        ${rows}
+      </div>
+    </div>
+  `;
+}
+
+// ─── Type list ─────────────────────────────────────────────
+function renderTypeList() {
+  const counts = {};
+  const openCounts = {};
+  Object.keys(DEFECT_TYPES).forEach(k => { counts[k] = 0; openCounts[k] = 0; });
+  defects.forEach(d => {
+    counts[d.type] = (counts[d.type]||0) + 1;
+    if (!d.resolved) openCounts[d.type] = (openCounts[d.type]||0) + 1;
+  });
+
+  const max = Math.max(...Object.values(counts), 1);
+
+  document.getElementById('type-list').innerHTML =
+    Object.entries(DEFECT_TYPES)
+      .sort((a,b) => counts[b[0]] - counts[a[0]])
+      .map(([key, t]) => `
+        <div class="type-row">
+          <div class="type-dot" style="background:${t.color}"></div>
+          <span class="type-name">${t.label}</span>
+          <div class="type-bar-wrap">
+            <div class="type-bar-fill" style="width:${counts[key]/max*100}%;background:${t.color}"></div>
+          </div>
+          <span class="type-count">${counts[key]}</span>
+        </div>
+      `).join('');
+}
+
+// ─── Recent list ───────────────────────────────────────────
+function renderRecentList() {
+  const sorted = [...defects].sort((a,b) => b.id - a.id).slice(0, 12);
+  document.getElementById('total-count-label').textContent = `전체 ${defects.length}건`;
+
+  document.getElementById('recent-list').innerHTML = sorted.map(d => {
+    const t = DEFECT_TYPES[d.type];
+    const pill = d.resolved
+      ? `<span class="status-pill" style="background:#e8f5ee;color:#2a7a4b">처리완료</span>`
+      : `<span class="status-pill" style="background:#fde8e8;color:#c8440a">미처리</span>`;
+    return `
+      <div class="defect-item" onclick="openUnitModal('${d.dong}',${d.floor},${d.unit})">
+        <div class="defect-badge" style="background:${t.color}"></div>
+        <div class="defect-info">
+          <div class="defect-unit">${d.dong} ${d.floor}층 ${d.unit.toString().padStart(2,'0')}호</div>
+          <div class="defect-type">${t.label}</div>
+          <div class="defect-desc">${d.desc}</div>
+          ${pill}
+        </div>
+        <div class="defect-date">${d.date}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ─── Unit Modal ────────────────────────────────────────────
+function openUnitModal(dong, floor, unit) {
+  selectedUnit = { dong, floor, unit };
+  const list = defects.filter(d => d.dong===dong && d.floor===floor && d.unit===unit);
+  document.getElementById('unit-modal-title').textContent =
+    `${dong} ${floor}층 ${String(unit).padStart(2,'0')}호 — 하자 현황`;
+
+  const container = document.getElementById('unit-defect-list');
+  if (list.length === 0) {
+    container.innerHTML = `<div style="text-align:center;padding:20px;color:var(--ink3);font-size:0.85rem">등록된 하자가 없습니다.</div>`;
+  } else {
+    container.innerHTML = list.map(d => {
+      const t = DEFECT_TYPES[d.type];
+      return `
+        <div class="unit-defect-card" id="udc-${d.id}">
+          <div class="udc-left">
+            <span class="udc-type" style="background:${t.color}20;color:${t.color}">${t.label}</span>
+            <div class="udc-desc">${d.desc}</div>
+            <div class="udc-date">접수일: ${d.date} · 접수자: ${d.reporter}</div>
+          </div>
+          <div class="udc-status" style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+            <button class="btn-resolve ${d.resolved?'resolved':''}"
+              onclick="toggleResolve(${d.id})" ${d.resolved?'disabled':''}>
+              ${d.resolved ? '✓ 완료' : '처리완료'}
+            </button>
+            <button class="btn-del-defect" onclick="deleteDefect(${d.id})">🗑</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  openModal('unit-modal');
+}
+
+function openAddFromUnit() {
+  if (!selectedUnit) return;
+  closeModal('unit-modal');
+  // Pre-fill dong/floor/unit
+  document.getElementById('f-dong').value = selectedUnit.dong;
+  populateFloorUnit();
+  setTimeout(() => {
+    document.getElementById('f-floor').value = selectedUnit.floor;
+    populateUnitSelect();
+    setTimeout(() => {
+      document.getElementById('f-unit').value = selectedUnit.unit;
+    }, 50);
+  }, 50);
+  openModal('add-modal');
+}
+
+// ─── Add defect ────────────────────────────────────────────
+function populateFloorUnit() {
+  const floorSel = document.getElementById('f-floor');
+  floorSel.innerHTML = Array.from({length: config.floors}, (_,i) => config.floors-i)
+    .map(f => `<option value="${f}">${f}층</option>`).join('');
+  populateUnitSelect();
+}
+
+function populateUnitSelect() {
+  const unitSel = document.getElementById('f-unit');
+  unitSel.innerHTML = Array.from({length: config.unitsPerFloor}, (_,i) => i+1)
+    .map(u => `<option value="${u}">${String(u).padStart(2,'0')}호</option>`).join('');
+}
+
+function submitDefect() {
+  const desc = document.getElementById('f-desc').value.trim();
+  if (!desc) { document.getElementById('f-desc').focus(); return; }
+
+  defects.push({
+    id: nextId++,
+    dong: document.getElementById('f-dong').value,
+    floor: parseInt(document.getElementById('f-floor').value),
+    unit: parseInt(document.getElementById('f-unit').value),
+    type: document.getElementById('f-type').value,
+    desc,
+    date: document.getElementById('f-date').value,
+    reporter: document.getElementById('f-reporter').value.trim() || '미기재',
+    resolved: false,
+  });
+
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-reporter').value = '';
+  closeModal('add-modal');
+  renderAll();
+}
+
+// ─── Resolve / Delete ──────────────────────────────────────
+function toggleResolve(id) {
+  const d = defects.find(x => x.id === id);
+  if (d) d.resolved = true;
+  if (selectedUnit) openUnitModal(selectedUnit.dong, selectedUnit.floor, selectedUnit.unit);
+  renderSummary();
+  renderBuilding();
+  renderRecentList();
+}
+
+function deleteDefect(id) {
+  if (!confirm('이 하자 항목을 삭제할까요?')) return;
+  defects = defects.filter(x => x.id !== id);
+  if (selectedUnit) openUnitModal(selectedUnit.dong, selectedUnit.floor, selectedUnit.unit);
+  renderAll();
+}
+
+// ─── Settings ──────────────────────────────────────────────
+function openSettings() {
+  document.getElementById('s-sitename').value = config.siteName;
+  document.getElementById('s-floors').value = config.floors;
+  document.getElementById('s-units').value = config.unitsPerFloor;
+  openModal('settings-modal');
+}
+
+function applySettings() {
+  config.siteName = document.getElementById('s-sitename').value.trim() || config.siteName;
+  config.floors = Math.min(30, Math.max(1, parseInt(document.getElementById('s-floors').value)||10));
+  config.unitsPerFloor = Math.min(10, Math.max(1, parseInt(document.getElementById('s-units').value)||4));
+  document.getElementById('site-name-tag').textContent = config.siteName;
+  closeModal('settings-modal');
+  populateFloorUnit();
+  renderAll();
+}
+
+// ─── Modal helpers ─────────────────────────────────────────
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+
+function openAddModal() {
+  selectedUnit = null;
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-reporter').value = '';
+  populateFloorUnit();
+  openModal('add-modal');
+}
+
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', function(e) {
+    if (e.target === this) closeModal(this.id);
+  });
+});
+
+// Resize rebuild
+window.addEventListener('resize', () => renderBuilding());
+
+// ─── Start ─────────────────────────────────────────────────
+init();
+</script>
+
+</body>
+</html>

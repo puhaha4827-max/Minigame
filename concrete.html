@@ -1,0 +1,593 @@
+<div id="rmc-app">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+#rmc-app {
+  --rm-bg: #141618;
+  --rm-surface: #1c1f23;
+  --rm-surface2: #23272d;
+  --rm-surface3: #2a2f37;
+  --rm-border: #333840;
+  --rm-ink: #e8eaf0;
+  --rm-ink2: #a0a8b8;
+  --rm-ink3: #5a6275;
+  --rm-orange: #f07020;
+  --rm-yellow: #f0c040;
+  --rm-green: #38c070;
+  --rm-red: #e04040;
+  --rm-blue: #4090e0;
+  background: #141618;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 24px 16px 52px;
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.018) 39px, rgba(255,255,255,0.018) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.018) 39px, rgba(255,255,255,0.018) 40px);
+}
+#rmc-app *, #rmc-app *::before, #rmc-app *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Header */
+#rmc-app .rm-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #333840; flex-wrap: wrap; }
+#rmc-app .rm-eyebrow { font-family: ‘DM Mono’, monospace; font-size: 0.62rem; color: #f07020; letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 6px; }
+#rmc-app .rm-title { font-family: ‘Bebas Neue’, sans-serif !important; font-size: 2.4rem !important; font-weight: 400 !important; color: #e8eaf0 !important; letter-spacing: 3px !important; line-height: 1 !important; background: none !important; border: none !important; padding: 0 !important; margin: 0 0 6px 0 !important; }
+#rmc-app .rm-subtitle { font-size: 0.78rem; color: #5a6275; line-height: 1.6; }
+#rmc-app .rm-truck-svg { opacity: 0.2; align-self: center; flex-shrink: 0; }
+
+/* Layout */
+#rmc-app .rm-layout { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+#rmc-app .rm-left { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+#rmc-app .rm-right { flex: 1 1 280px; min-width: 260px; display: flex; flex-direction: column; gap: 12px; }
+
+/* Panel */
+#rmc-app .rm-panel { background: #1c1f23; border: 1px solid #333840; border-radius: 10px; overflow: hidden; }
+#rmc-app .rm-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-bottom: 1px solid #333840; background: #23272d; }
+#rmc-app .rm-panel-title { font-family: ‘DM Mono’, monospace; font-size: 0.72rem; font-weight: 500; color: #a0a8b8; letter-spacing: 1.5px; text-transform: uppercase; }
+#rmc-app .rm-panel-tag { font-family: ‘DM Mono’, monospace; font-size: 0.62rem; color: #5a6275; background: #2a2f37; padding: 2px 8px; border-radius: 3px; border: 1px solid #333840; }
+#rmc-app .rm-panel-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+
+/* Input */
+#rmc-app .rm-input-group { display: flex; flex-direction: column; gap: 5px; }
+#rmc-app .rm-label { font-size: 0.7rem; font-weight: 700; color: #5a6275; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between; }
+#rmc-app .rm-label-unit { font-size: 0.65rem; font-weight: 400; color: #5a6275; font-family: ‘DM Mono’, monospace; text-transform: none; letter-spacing: 0; }
+#rmc-app .rm-input-wrap { position: relative; display: flex; align-items: center; }
+#rmc-app .rm-input { width: 100%; background: #23272d; border: 1.5px solid #333840; border-radius: 7px; padding: 10px 48px 10px 14px; font-family: ‘DM Mono’, monospace; font-size: 1.05rem; color: #e8eaf0; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; }
+#rmc-app .rm-input:focus { border-color: #f07020; background: #2a2f37; }
+#rmc-app .rm-input::placeholder { color: #333840; }
+#rmc-app .rm-input-suffix { position: absolute; right: 12px; font-family: ‘DM Mono’, monospace; font-size: 0.72rem; color: #5a6275; pointer-events: none; }
+#rmc-app .rm-input-sm { padding-right: 14px; }
+
+/* Select */
+#rmc-app .rm-select-wrap { position: relative; }
+#rmc-app .rm-select { width: 100%; background: #23272d; border: 1.5px solid #333840; border-radius: 7px; padding: 10px 14px; font-family: ‘Noto Sans KR’, sans-serif; font-size: 0.88rem; color: #e8eaf0; outline: none; -webkit-appearance: none; appearance: none; cursor: pointer; transition: border-color 0.2s; }
+#rmc-app .rm-select:focus { border-color: #f07020; }
+#rmc-app .rm-select option { background: #1c1f23; }
+#rmc-app .rm-select-arrow { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #5a6275; font-size: 0.7rem; pointer-events: none; }
+
+/* Range */
+#rmc-app .rm-range { width: 100%; -webkit-appearance: none; appearance: none; height: 4px; border-radius: 99px; background: #2a2f37; outline: none; cursor: pointer; margin-top: 4px; }
+#rmc-app .rm-range::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #f07020; cursor: pointer; border: 2px solid #141618; box-shadow: 0 0 0 2px #f07020; }
+#rmc-app .rm-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #f07020; cursor: pointer; border: 2px solid #141618; }
+#rmc-app .rm-range-labels { display: flex; justify-content: space-between; margin-top: 3px; }
+#rmc-app .rm-range-label { font-family: ‘DM Mono’, monospace; font-size: 0.6rem; color: #5a6275; }
+
+/* Toggle */
+#rmc-app .rm-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+#rmc-app .rm-toggle-label { font-size: 0.82rem; color: #a0a8b8; font-weight: 500; }
+#rmc-app .rm-toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; display: inline-block; }
+#rmc-app .rm-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+#rmc-app .rm-toggle-slider { position: absolute; inset: 0; background: #2a2f37; border-radius: 99px; cursor: pointer; border: 1.5px solid #333840; transition: background 0.2s; }
+#rmc-app .rm-toggle-slider::after { content: ‘’; position: absolute; width: 16px; height: 16px; border-radius: 50%; background: #5a6275; top: 2px; left: 2px; transition: transform 0.2s, background 0.2s; }
+#rmc-app .rm-toggle input:checked + .rm-toggle-slider { background: rgba(240,112,32,0.2); border-color: #f07020; }
+#rmc-app .rm-toggle input:checked + .rm-toggle-slider::after { transform: translateX(20px); background: #f07020; }
+
+/* Lunch fields */
+#rmc-app .rm-lunch-fields { display: none; flex-direction: column; gap: 10px; padding: 12px; background: #23272d; border-radius: 7px; border: 1px solid #333840; }
+#rmc-app .rm-lunch-fields.rm-active { display: flex; }
+#rmc-app .rm-lunch-time-row { display: flex; gap: 8px; align-items: center; }
+#rmc-app .rm-lunch-time-row .rm-input-wrap { flex: 1; }
+#rmc-app .rm-lunch-sep { font-family: ‘DM Mono’, monospace; font-size: 0.9rem; color: #5a6275; flex-shrink: 0; }
+
+/* Result panel */
+#rmc-app .rm-result-panel { background: #1c1f23; border: 1px solid #333840; border-radius: 10px; overflow: hidden; position: relative; }
+#rmc-app .rm-result-panel::before { content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #f07020, #f0c040); }
+#rmc-app .rm-result-main { padding: 20px 18px 16px; text-align: center; border-bottom: 1px solid #333840; }
+#rmc-app .rm-result-label { font-family: ‘DM Mono’, monospace; font-size: 0.62rem; color: #5a6275; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+#rmc-app .rm-result-value { font-family: ‘Bebas Neue’, sans-serif; font-size: 4rem; color: #f07020; line-height: 1; letter-spacing: 2px; display: block; }
+#rmc-app .rm-result-unit { font-size: 0.8rem; color: #5a6275; margin-top: 2px; display: block; }
+#rmc-app .rm-result-note { font-size: 0.72rem; color: #a0a8b8; margin-top: 8px; padding: 6px 10px; background: #23272d; border-radius: 5px; display: inline-block; }
+
+/* Stat grid */
+#rmc-app .rm-stat-grid { display: grid; grid-template-columns: 1fr 1fr; }
+#rmc-app .rm-stat-cell { padding: 12px 14px; border-right: 1px solid #333840; border-bottom: 1px solid #333840; }
+#rmc-app .rm-stat-cell:nth-child(2n) { border-right: none; }
+#rmc-app .rm-stat-cell:nth-child(3), #rmc-app .rm-stat-cell:nth-child(4) { border-bottom: none; }
+#rmc-app .rm-stat-label { font-family: ‘DM Mono’, monospace; font-size: 0.6rem; color: #5a6275; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+#rmc-app .rm-stat-value { font-family: ‘Bebas Neue’, sans-serif; font-size: 1.6rem; line-height: 1; display: block; }
+#rmc-app .rm-stat-sub { font-size: 0.65rem; color: #5a6275; display: block; margin-top: 1px; }
+
+/* Schedule table */
+#rmc-app .rm-schedule-wrap { max-height: 340px; overflow-y: auto; }
+#rmc-app .rm-schedule-wrap::-webkit-scrollbar { width: 4px; }
+#rmc-app .rm-schedule-wrap::-webkit-scrollbar-track { background: #1c1f23; }
+#rmc-app .rm-schedule-wrap::-webkit-scrollbar-thumb { background: #333840; border-radius: 2px; }
+#rmc-app .rm-schedule-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+#rmc-app .rm-schedule-table th { background: #23272d; color: #5a6275; font-family: ‘DM Mono’, monospace; font-size: 0.62rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; padding: 8px 10px; text-align: center; border-bottom: 1px solid #333840; }
+#rmc-app .rm-schedule-table td { padding: 8px 10px; text-align: center; border-bottom: 1px solid rgba(51,56,64,0.5); color: #a0a8b8; font-family: ‘DM Mono’, monospace; font-size: 0.78rem; }
+#rmc-app .rm-schedule-table tr:last-child td { border-bottom: none; }
+#rmc-app .rm-schedule-table tr.rm-now td { background: rgba(240,112,32,0.1); color: #e8eaf0; }
+#rmc-app .rm-schedule-table tr.rm-lunch-row td { background: rgba(240,192,64,0.07); color: #f0c040; font-family: ‘Noto Sans KR’, sans-serif; font-size: 0.75rem; border-top: 1px dashed rgba(240,192,64,0.25); border-bottom: 1px dashed rgba(240,192,64,0.25); }
+#rmc-app .rm-car-num { display: inline-block; background: #f07020; color: #fff; font-family: ‘Bebas Neue’, sans-serif; font-size: 0.88rem; padding: 1px 7px; border-radius: 3px; letter-spacing: 1px; }
+#rmc-app .rm-status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+
+/* Warning */
+#rmc-app .rm-warning { background: rgba(224,64,64,0.12); border: 1px solid rgba(224,64,64,0.3); border-radius: 7px; padding: 10px 14px; font-size: 0.76rem; color: #ff8080; display: none; line-height: 1.6; }
+#rmc-app .rm-warning.rm-show { display: block; }
+
+/* Tip */
+#rmc-app .rm-tip { background: #23272d; border: 1px solid #333840; border-left: 3px solid #f07020; border-radius: 0 7px 7px 0; padding: 10px 14px; font-size: 0.75rem; color: #5a6275; line-height: 1.7; }
+#rmc-app .rm-tip strong { color: #f07020; display: block; margin-bottom: 3px; font-size: 0.76rem; }
+
+/* Buttons */
+#rmc-app .rm-calc-btn { width: 100%; background: #f07020; color: #fff; border: none; border-radius: 8px; padding: 13px; font-family: ‘Bebas Neue’, sans-serif; font-size: 1.2rem; letter-spacing: 3px; cursor: pointer; transition: background 0.15s; }
+#rmc-app .rm-calc-btn:hover { background: #e05010; }
+#rmc-app .rm-reset-btn { width: 100%; background: none; border: 1px solid #333840; border-radius: 8px; padding: 9px; font-family: ‘Noto Sans KR’, sans-serif; font-size: 0.78rem; color: #5a6275; cursor: pointer; transition: all 0.15s; }
+#rmc-app .rm-reset-btn:hover { border-color: #e04040; color: #e04040; }
+
+/* Notice */
+#rmc-app .rm-notice { margin-top: 18px; background: rgba(255,255,255,0.03); border: 1px solid #333840; border-radius: 8px; padding: 12px 16px; font-size: 0.72rem; color: #5a6275; line-height: 1.8; }
+
+@media (max-width: 640px) {
+#rmc-app .rm-layout { flex-direction: column; }
+#rmc-app .rm-right { flex: 1 1 100%; }
+#rmc-app .rm-title { font-size: 1.9rem !important; }
+#rmc-app .rm-result-value { font-size: 3rem; }
+}
+</style>
+
+<!-- Header -->
+
+<div class="rm-header">
+  <div>
+    <span class="rm-eyebrow">READY-MIXED CONCRETE DISPATCH CALCULATOR</span>
+    <div class="rm-title">레미콘 호출 타이밍 계산기</div>
+    <p class="rm-subtitle">타설량 · 속도 · 배차 조건 입력 → 차량별 호출 시각 자동 산출</p>
+  </div>
+  <!-- SVG 레미콘 -->
+  <div class="rm-truck-svg">
+    <svg width="96" height="60" viewBox="0 0 96 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- 캡(운전석) -->
+      <rect x="58" y="18" width="32" height="26" rx="4" fill="#f07020"/>
+      <rect x="62" y="22" width="12" height="11" rx="2" fill="#141618" opacity="0.55"/>
+      <rect x="76" y="22" width="10" height="11" rx="2" fill="#141618" opacity="0.55"/>
+      <!-- 차체 하부 프레임 -->
+      <rect x="4" y="40" width="88" height="6" rx="2" fill="#e8eaf0" opacity="0.1"/>
+      <!-- 드럼 외곽 -->
+      <ellipse cx="32" cy="24" rx="24" ry="17" fill="#e8eaf0" opacity="0.1"/>
+      <!-- 드럼 본체 -->
+      <ellipse cx="32" cy="24" rx="20" ry="14" fill="#f07020" opacity="0.5"/>
+      <!-- 드럼 나선 -->
+      <path d="M14 29 Q22 15 32 20 Q42 25 50 14" stroke="#ffffff" stroke-width="1.8" fill="none" opacity="0.35" stroke-linecap="round"/>
+      <path d="M13 33 Q22 19 32 24 Q42 29 51 18" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.2" stroke-linecap="round"/>
+      <!-- 드럼 앞뒤 링 -->
+      <ellipse cx="11" cy="24" rx="3.5" ry="12" fill="none" stroke="#f07020" stroke-width="2" opacity="0.45"/>
+      <ellipse cx="53" cy="24" rx="3.5" ry="12" fill="none" stroke="#f07020" stroke-width="2" opacity="0.45"/>
+      <!-- 배출 슈트 -->
+      <path d="M7 36 L2 46" stroke="#f07020" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+      <path d="M2 46 L10 48" stroke="#f07020" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+      <!-- 바퀴 4개 -->
+      <circle cx="20" cy="50" r="8" fill="#23272d" stroke="#5a6275" stroke-width="1.5"/>
+      <circle cx="20" cy="50" r="4" fill="#2a2f37"/>
+      <circle cx="44" cy="50" r="8" fill="#23272d" stroke="#5a6275" stroke-width="1.5"/>
+      <circle cx="44" cy="50" r="4" fill="#2a2f37"/>
+      <circle cx="70" cy="50" r="8" fill="#23272d" stroke="#5a6275" stroke-width="1.5"/>
+      <circle cx="70" cy="50" r="4" fill="#2a2f37"/>
+      <circle cx="84" cy="50" r="6" fill="#23272d" stroke="#5a6275" stroke-width="1.5"/>
+      <circle cx="84" cy="50" r="3" fill="#2a2f37"/>
+    </svg>
+  </div>
+</div>
+
+<div class="rm-layout">
+  <!-- ── 왼쪽 입력 ── -->
+  <div class="rm-left">
+
+```
+<!-- 타설 기본 정보 -->
+<div class="rm-panel">
+  <div class="rm-panel-header">
+    <span class="rm-panel-title">타설 기본 정보</span>
+    <span class="rm-panel-tag">POUR INFO</span>
+  </div>
+  <div class="rm-panel-body">
+    <div class="rm-input-group">
+      <label class="rm-label">총 타설량 <span class="rm-label-unit">㎥</span></label>
+      <div class="rm-input-wrap">
+        <input class="rm-input" type="number" id="rm-total-vol" placeholder="120" min="1" max="9999" oninput="rmCalc()">
+        <span class="rm-input-suffix">㎥</span>
+      </div>
+    </div>
+    <div class="rm-input-group">
+      <label class="rm-label">타설 속도 <span class="rm-label-unit">㎥/hr</span></label>
+      <div class="rm-input-wrap">
+        <input class="rm-input" type="number" id="rm-speed" placeholder="30" min="1" max="200" oninput="rmSyncRange('rm-speed','rm-speed-range',10,120); rmCalc()">
+        <span class="rm-input-suffix">㎥/hr</span>
+      </div>
+      <input class="rm-range" type="range" id="rm-speed-range" min="10" max="120" value="30"
+        oninput="document.getElementById('rm-speed').value=this.value; rmCalc()">
+      <div class="rm-range-labels">
+        <span class="rm-range-label">10</span>
+        <span class="rm-range-label">40</span>
+        <span class="rm-range-label">70</span>
+        <span class="rm-range-label">100</span>
+        <span class="rm-range-label">120</span>
+      </div>
+    </div>
+    <div class="rm-input-group">
+      <label class="rm-label">타설 시작 시각</label>
+      <div class="rm-input-wrap">
+        <input class="rm-input rm-input-sm" type="time" id="rm-start-time" value="08:00" oninput="rmCalc()">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 차량·배차 조건 -->
+<div class="rm-panel">
+  <div class="rm-panel-header">
+    <span class="rm-panel-title">차량 · 배차 조건</span>
+    <span class="rm-panel-tag">TRUCK CONFIG</span>
+  </div>
+  <div class="rm-panel-body">
+    <div class="rm-input-group">
+      <label class="rm-label">차량 1대 적재량 <span class="rm-label-unit">㎥/대</span></label>
+      <div class="rm-select-wrap">
+        <select class="rm-select" id="rm-truck-vol" onchange="rmCalc()">
+          <option value="3">3㎥ (소형)</option>
+          <option value="4">4㎥</option>
+          <option value="5">5㎥</option>
+          <option value="6" selected>6㎥ (표준)</option>
+          <option value="7">7㎥</option>
+          <option value="8">8㎥ (대형)</option>
+        </select>
+        <span class="rm-select-arrow">▼</span>
+      </div>
+    </div>
+    <div class="rm-input-group">
+      <label class="rm-label">공장 → 현장 편도시간 <span class="rm-label-unit">분</span></label>
+      <div class="rm-input-wrap">
+        <input class="rm-input" type="number" id="rm-travel" placeholder="20" min="1" max="180" value="20" oninput="rmSyncRange('rm-travel','rm-travel-range',5,90); rmCalc()">
+        <span class="rm-input-suffix">분</span>
+      </div>
+      <input class="rm-range" type="range" id="rm-travel-range" min="5" max="90" value="20"
+        oninput="document.getElementById('rm-travel').value=this.value; rmCalc()">
+      <div class="rm-range-labels">
+        <span class="rm-range-label">5분</span>
+        <span class="rm-range-label">30분</span>
+        <span class="rm-range-label">60분</span>
+        <span class="rm-range-label">90분</span>
+      </div>
+    </div>
+    <div class="rm-input-group">
+      <label class="rm-label">현장 하차 시간 <span class="rm-label-unit">분/대</span></label>
+      <div class="rm-input-wrap">
+        <input class="rm-input" type="number" id="rm-unload" placeholder="15" min="1" max="60" value="15" oninput="rmCalc()">
+        <span class="rm-input-suffix">분</span>
+      </div>
+    </div>
+    <div class="rm-input-group">
+      <label class="rm-label">예비 여유(버퍼) <span class="rm-label-unit">분</span></label>
+      <div class="rm-input-wrap">
+        <input class="rm-input" type="number" id="rm-buffer" placeholder="5" min="0" max="30" value="5" oninput="rmCalc()">
+        <span class="rm-input-suffix">분</span>
+      </div>
+    </div>
+    <div class="rm-input-group">
+      <label class="rm-label">동시 운용 차량 수</label>
+      <div class="rm-select-wrap">
+        <select class="rm-select" id="rm-max-trucks" onchange="rmCalc()">
+          <option value="99">제한 없음</option>
+          <option value="2">최대 2대</option>
+          <option value="3">최대 3대</option>
+          <option value="4">최대 4대</option>
+          <option value="5">최대 5대</option>
+          <option value="6">최대 6대</option>
+        </select>
+        <span class="rm-select-arrow">▼</span>
+      </div>
+    </div>
+    <button class="rm-calc-btn" onclick="rmCalc()">계산하기</button>
+    <button class="rm-reset-btn" onclick="rmReset()">↺ 초기화</button>
+  </div>
+</div>
+
+<!-- 점심시간 설정 -->
+<div class="rm-panel">
+  <div class="rm-panel-header">
+    <span class="rm-panel-title">점심시간 설정</span>
+    <span class="rm-panel-tag">LUNCH BREAK</span>
+  </div>
+  <div class="rm-panel-body">
+    <div class="rm-toggle-row">
+      <span class="rm-toggle-label">점심시간 중단 적용</span>
+      <label class="rm-toggle">
+        <input type="checkbox" id="rm-lunch-on" onchange="rmToggleLunch()">
+        <span class="rm-toggle-slider"></span>
+      </label>
+    </div>
+    <div class="rm-lunch-fields" id="rm-lunch-fields">
+      <div class="rm-input-group">
+        <label class="rm-label">점심 시간대</label>
+        <div class="rm-lunch-time-row">
+          <div class="rm-input-wrap">
+            <input class="rm-input rm-input-sm" type="time" id="rm-lunch-start" value="12:00" oninput="rmCalc()">
+          </div>
+          <span class="rm-lunch-sep">~</span>
+          <div class="rm-input-wrap">
+            <input class="rm-input rm-input-sm" type="time" id="rm-lunch-end" value="13:00" oninput="rmCalc()">
+          </div>
+        </div>
+      </div>
+      <div class="rm-tip" style="margin:0">
+        <strong>적용 방식</strong>
+        점심 시간대에 걸리는 차량은 자동으로 점심 이후로 밀립니다. 스케줄 표에서 구분선으로 확인하세요.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="rm-tip">
+  <strong>현장 활용 팁</strong>
+  편도 20분이면 왕복+하차 약 55분 → 배차 간격 최소 55분 이상 확보해야 연속 타설이 가능합니다. 여름철 가수 방지를 위해 배차 간격은 90분 이내로 유지하세요.
+</div>
+```
+
+  </div>
+
+  <!-- ── 오른쪽 결과 ── -->
+
+  <div class="rm-right">
+
+```
+<div class="rm-warning" id="rm-warning"></div>
+
+<!-- 핵심 결과 -->
+<div class="rm-result-panel">
+  <div class="rm-result-main">
+    <span class="rm-result-label">차량 배차 간격</span>
+    <span class="rm-result-value" id="rm-interval">—</span>
+    <span class="rm-result-unit">분 간격으로 1대씩 호출</span>
+    <div style="margin-top:10px">
+      <span class="rm-result-note" id="rm-interval-note">입력값을 먼저 입력해주세요</span>
+    </div>
+  </div>
+  <div class="rm-stat-grid">
+    <div class="rm-stat-cell">
+      <span class="rm-stat-label">총 필요 차량</span>
+      <span class="rm-stat-value" id="rm-total-trucks" style="color:#f07020">—</span>
+      <span class="rm-stat-sub">대</span>
+    </div>
+    <div class="rm-stat-cell">
+      <span class="rm-stat-label">동시 운행</span>
+      <span class="rm-stat-value" id="rm-concurrent" style="color:#f0c040">—</span>
+      <span class="rm-stat-sub">대 (최대)</span>
+    </div>
+    <div class="rm-stat-cell">
+      <span class="rm-stat-label">총 타설 시간</span>
+      <span class="rm-stat-value" id="rm-duration" style="color:#38c070">—</span>
+      <span class="rm-stat-sub">소요</span>
+    </div>
+    <div class="rm-stat-cell">
+      <span class="rm-stat-label">완료 예정</span>
+      <span class="rm-stat-value" id="rm-end-time" style="color:#4090e0;font-size:1.2rem">—:—</span>
+      <span class="rm-stat-sub">예상 완료 시각</span>
+    </div>
+  </div>
+</div>
+
+<!-- 배차 스케줄 -->
+<div class="rm-panel">
+  <div class="rm-panel-header">
+    <span class="rm-panel-title">차량별 호출 스케줄</span>
+    <span class="rm-panel-tag" id="rm-sched-count">—</span>
+  </div>
+  <div class="rm-schedule-wrap">
+    <table class="rm-schedule-table">
+      <thead>
+        <tr>
+          <th>차량</th>
+          <th>호출</th>
+          <th>도착</th>
+          <th>하차완료</th>
+          <th>누적㎥</th>
+        </tr>
+      </thead>
+      <tbody id="rm-sched-tbody">
+        <tr><td colspan="5" style="color:#5a6275;padding:20px;font-family:'Noto Sans KR',sans-serif;font-size:0.8rem">입력값을 입력하면 스케줄이 생성됩니다</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<div class="rm-notice">
+  ⚠ 본 계산기는 현장 참고용입니다. 실제 배차는 레미콘 공장·현장 여건에 따라 달라질 수 있습니다. 교통 상황, 펌프카 능력, 양생 조건 등 현장 변수를 반드시 감안하여 운용하시기 바랍니다.
+</div>
+
+<script>
+(function() {
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  function toMin(hhmm) {
+    var p = (hhmm || '00:00').split(':');
+    return parseInt(p[0]) * 60 + parseInt(p[1]);
+  }
+
+  function toHHMM(absMin) {
+    var h = Math.floor(absMin / 60) % 24;
+    var m = absMin % 60;
+    return pad2(h) + ':' + pad2(m);
+  }
+
+  function addMin(hhmm, mins) {
+    return toHHMM(toMin(hhmm) + mins);
+  }
+
+  window.rmSyncRange = function(inputId, rangeId, mn, mx) {
+    var v = parseFloat(document.getElementById(inputId).value);
+    if (!isNaN(v) && v >= mn && v <= mx) {
+      document.getElementById(rangeId).value = v;
+    }
+  };
+
+  window.rmToggleLunch = function() {
+    var on = document.getElementById('rm-lunch-on').checked;
+    var f = document.getElementById('rm-lunch-fields');
+    if (on) f.classList.add('rm-active');
+    else f.classList.remove('rm-active');
+    rmCalc();
+  };
+
+  window.rmCalc = function() {
+    var totalVol  = parseFloat(document.getElementById('rm-total-vol').value) || 0;
+    var speed     = parseFloat(document.getElementById('rm-speed').value)     || 0;
+    var startTime = document.getElementById('rm-start-time').value            || '08:00';
+    var truckVol  = parseFloat(document.getElementById('rm-truck-vol').value) || 6;
+    var travel    = parseFloat(document.getElementById('rm-travel').value)    || 20;
+    var unload    = parseFloat(document.getElementById('rm-unload').value)    || 15;
+    var buffer    = parseFloat(document.getElementById('rm-buffer').value)    || 5;
+    var maxTrucks = parseInt(document.getElementById('rm-max-trucks').value)  || 99;
+    var lunchOn   = document.getElementById('rm-lunch-on').checked;
+    var lsMin     = lunchOn ? toMin(document.getElementById('rm-lunch-start').value || '12:00') : -1;
+    var leMin     = lunchOn ? toMin(document.getElementById('rm-lunch-end').value   || '13:00') : -1;
+
+    var warnEl = document.getElementById('rm-warning');
+    if (!totalVol || !speed) { warnEl.classList.remove('rm-show'); return; }
+
+    // 핵심 계산
+    var pourPerTruck = (truckVol / speed) * 60; // 차량 1대분 타설 시간(분)
+    var cycle        = travel * 2 + unload;      // 1대 사이클(분)
+    var interval     = Math.ceil(pourPerTruck + buffer); // 배차 간격(분)
+    var totalTrucks  = Math.ceil(totalVol / truckVol);
+    var concurrent   = Math.min(Math.ceil(cycle / interval), maxTrucks, totalTrucks);
+    var durationMin  = Math.round((totalVol / speed) * 60);
+
+    // 완료 시각 (점심 반영)
+    var startAbs = toMin(startTime);
+    var endAbs   = startAbs + durationMin;
+    if (lunchOn && lsMin >= 0 && leMin > lsMin) {
+      if (endAbs > lsMin && startAbs < leMin) {
+        endAbs += (leMin - lsMin);
+      }
+    }
+
+    // 경고
+    var warns = [];
+    if (interval < travel + 5) warns.push('배차 간격(' + interval + '분)이 편도 이동시간(' + travel + '분)에 비해 짧습니다. 현장 대기 혼잡이 발생할 수 있습니다.');
+    if (cycle > interval * maxTrucks + 10) warns.push('현재 차량 수로는 연속 타설이 어렵습니다. 차량 수를 늘리거나 타설 속도를 조정하세요.');
+    if (durationMin / 60 > 8) warns.push('총 타설 시간이 ' + (durationMin/60).toFixed(1) + '시간입니다. 야간 타설 가능 여부를 확인하세요.');
+    if (lunchOn && lsMin >= leMin) warns.push('점심 시작 시각이 종료 시각보다 늦습니다. 시간을 확인하세요.');
+
+    if (warns.length) {
+      warnEl.innerHTML = warns.map(function(w) { return '⚠ ' + w; }).join('<br>');
+      warnEl.classList.add('rm-show');
+    } else {
+      warnEl.classList.remove('rm-show');
+    }
+
+    // 결과 표시
+    document.getElementById('rm-interval').textContent = interval;
+    document.getElementById('rm-interval-note').textContent = '왕복+하차: ' + cycle + '분 / 동시운행: ' + concurrent + '대 기준';
+    document.getElementById('rm-total-trucks').textContent = totalTrucks;
+    document.getElementById('rm-concurrent').textContent = concurrent;
+    var dh = Math.floor(durationMin / 60), dm = durationMin % 60;
+    document.getElementById('rm-duration').textContent = dh > 0 ? dh + 'h ' + dm + 'm' : dm + '분';
+    document.getElementById('rm-end-time').textContent = toHHMM(endAbs);
+    document.getElementById('rm-sched-count').textContent = totalTrucks + '대';
+
+    // 스케줄 생성
+    var now = new Date();
+    var nowAbs = now.getHours() * 60 + now.getMinutes();
+    var rows = '';
+    var cumVol = 0;
+    var lunchInserted = false;
+    var prevAbs = -1;
+
+    for (var i = 0; i < totalTrucks; i++) {
+      var callAbs = startAbs + i * interval;
+
+      // 점심 스킵
+      if (lunchOn && lsMin >= 0) {
+        if (callAbs >= lsMin && callAbs < leMin) callAbs = leMin;
+        if (prevAbs >= 0 && callAbs < prevAbs + interval) callAbs = prevAbs + interval;
+        // 점심 구분선
+        if (!lunchInserted && callAbs >= leMin && leMin > startAbs) {
+          rows += '<tr class="rm-lunch-row"><td colspan="5">점심 중단: ' + toHHMM(lsMin) + ' ~ ' + toHHMM(leMin) + ' &nbsp; (재개 후 타설 이어서 진행)</td></tr>';
+          lunchInserted = true;
+        }
+      }
+      prevAbs = callAbs;
+
+      var callTime   = toHHMM(callAbs);
+      var arriveTime = addMin(callTime, travel);
+      var doneTime   = addMin(arriveTime, unload);
+      cumVol += truckVol;
+      if (cumVol > totalVol) cumVol = totalVol;
+
+      var isPast = callAbs < nowAbs;
+      var isNow  = callAbs === nowAbs;
+      var dotColor = isPast ? '#5a6275' : (isNow ? '#f07020' : '#38c070');
+
+      rows += '<tr' + (isNow ? ' class="rm-now"' : '') + '>' +
+        '<td><span class="rm-car-num">' + pad2(i + 1) + '</span></td>' +
+        '<td><span class="rm-status-dot" style="background:' + dotColor + '"></span>' + callTime + '</td>' +
+        '<td>' + arriveTime + '</td>' +
+        '<td>' + doneTime + '</td>' +
+        '<td style="color:' + (cumVol >= totalVol ? '#38c070' : '#a0a8b8') + '">' + cumVol.toFixed(1) + '</td>' +
+        '</tr>';
+    }
+
+    document.getElementById('rm-sched-tbody').innerHTML = rows;
+  };
+
+  window.rmReset = function() {
+    document.getElementById('rm-total-vol').value = '';
+    document.getElementById('rm-speed').value = '';
+    document.getElementById('rm-speed-range').value = 30;
+    document.getElementById('rm-start-time').value = '08:00';
+    document.getElementById('rm-truck-vol').value = '6';
+    document.getElementById('rm-travel').value = '20';
+    document.getElementById('rm-travel-range').value = 20;
+    document.getElementById('rm-unload').value = '15';
+    document.getElementById('rm-buffer').value = '5';
+    document.getElementById('rm-max-trucks').value = '99';
+    document.getElementById('rm-lunch-on').checked = false;
+    document.getElementById('rm-lunch-fields').classList.remove('rm-active');
+    document.getElementById('rm-lunch-start').value = '12:00';
+    document.getElementById('rm-lunch-end').value = '13:00';
+    document.getElementById('rm-interval').textContent = '—';
+    document.getElementById('rm-interval-note').textContent = '입력값을 먼저 입력해주세요';
+    document.getElementById('rm-total-trucks').textContent = '—';
+    document.getElementById('rm-concurrent').textContent = '—';
+    document.getElementById('rm-duration').textContent = '—';
+    document.getElementById('rm-end-time').textContent = '—:—';
+    document.getElementById('rm-sched-count').textContent = '—';
+    document.getElementById('rm-sched-tbody').innerHTML =
+      '<tr><td colspan="5" style="color:#5a6275;padding:20px;font-family:\'Noto Sans KR\',sans-serif;font-size:0.8rem">입력값을 입력하면 스케줄이 생성됩니다</td></tr>';
+    document.getElementById('rm-warning').classList.remove('rm-show');
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { rmCalc(); });
+  } else {
+    rmCalc();
+  }
+
+})();
+</script>
+
+</div>
